@@ -4,8 +4,9 @@ require_relative '../lib/room'
 
 class Amazeingly::RoomTest < Minitest::Test
   def setup
-    @room = Amazeingly::Room.new({ id: 4, name: "Sun Room", west: 2, south: 1, objects: [ {"name": "Fork"}, { "name": "Potted Plant" } ]})
+    @room = Amazeingly::Room.new(id: 4, name: 'Sun Room', west: 2, south: 1, objects: [{ name: 'Fork' }, { name: 'Potted Plant' }])
   end
+
   def test_attr_reader
     assert_equal 4, @room.id
     assert_equal 'Sun Room', @room.name
@@ -13,7 +14,7 @@ class Amazeingly::RoomTest < Minitest::Test
     assert_equal 1, @room.south
     assert_equal nil, @room.east
     assert_equal 2, @room.west
-    assert_equal [{"name": "Fork"}, { "name": "Potted Plant" }], @room.objects
+    assert_equal [{ name: 'Fork' }, { name: 'Potted Plant' }], @room.objects
   end
 
   def test_has_object?
@@ -29,9 +30,9 @@ class Amazeingly::RoomTest < Minitest::Test
   end
 
   def test_matching_objects
-    assert_equal ['Fork'], @room.matching_objects(['Fork', 'Knife'])
+    assert_equal ['Fork'], @room.matching_objects(%w(Fork Knife))
     assert_equal ['Potted Plant', 'Fork'], @room.matching_objects(['Potted Plant', 'Fork'])
-    assert_equal [], @room.matching_objects(['Knife', 'Laptop'])
+    assert_equal [], @room.matching_objects(%w(Knife Laptop))
   end
 
   def test_object_names
@@ -43,11 +44,11 @@ class Amazeingly::RoomTest < Minitest::Test
   end
 
   def test_equal_operator
-    expected = Amazeingly::Room.new id: 4, name: "Sun Room", west: 2, south: 1, objects: [ {"name": "Fork"}, { "name": "Potted Plant" } ]
+    expected = Amazeingly::Room.new id: 4, name: 'Sun Room', west: 2, south: 1, objects: [{ name: 'Fork' }, { name: 'Potted Plant' }]
     assert_equal expected, @room
-    expected = Amazeingly::Room.new id: 4, name: "Sun Room", west: 2, objects: [ {"name": "Fork"}, { "name": "Potted Plant" } ]
+    expected = Amazeingly::Room.new id: 4, name: 'Sun Room', west: 2, objects: [{ name: 'Fork' }, { name: 'Potted Plant' }]
     refute_equal expected, @room
-    expected = Amazeingly::Room.new id: 3, name: "Sun Room", west: 2, south: 1, objects: [ {"name": "Fork"}, { "name": "Potted Plant" } ]
+    expected = Amazeingly::Room.new id: 3, name: 'Sun Room', west: 2, south: 1, objects: [{ name: 'Fork' }, { name: 'Potted Plant' }]
     refute_equal expected, @room
   end
 end

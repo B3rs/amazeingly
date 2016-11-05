@@ -27,12 +27,12 @@ module Amazeingly
 
         next_rooms = rooms_collection.connected_rooms(current_room) - path.visited_rooms
 
-        if next_rooms.any?
-          rooms_queue = next_rooms + rooms_queue
-        else
-          # I can't go in any unvisited rooms, revert last step and go back to previous room
-          rooms_queue = rooms_queue.unshift(previous_room)
-        end
+        rooms_queue = if next_rooms.any?
+                        next_rooms + rooms_queue
+                      else
+                        # I can't go in any unvisited rooms, revert last step and go back to previous room
+                        rooms_queue.unshift(previous_room)
+                      end
       end
     end
   end
