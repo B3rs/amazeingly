@@ -6,7 +6,7 @@ class RoomsCollection
   attr_reader :rooms
 
   def initialize(rooms=[])
-    @rooms = rooms
+    @rooms = rooms.map{|room| ::Room.new(room)}
   end
 
   def find(id)
@@ -21,5 +21,8 @@ class RoomsCollection
     rooms.count
   end
 
+  def ==(collection)
+    rooms.sort_by{|room| room.id} == collection.rooms.sort_by{|room| room.id}
+  end
 
 end

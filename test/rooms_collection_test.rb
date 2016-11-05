@@ -5,16 +5,17 @@ require_relative '../lib/rooms_collection'
 class RoomsCollectionTest < Minitest::Test
   def setup
     @rooms = [
-      ::Room.new({ id: 1, name: "Hallway", north: 2, objects: [] }),
-      ::Room.new({ id: 2, name: "Dining Room", south: 1, west: 3, east: 4, objects: []}),
-      ::Room.new({ id: 3, name: "Kitchen", east:2, objects: [ { "name": "Knife" } ] }),
-      ::Room.new({ id: 4, name: "Sun Room", west:2, objects: [ { "name": "Potted Plant" } ]})
+      { id: 1, name: "Hallway", north: 2, objects: [] },
+      { id: 2, name: "Dining Room", south: 1, west: 3, east: 4, objects: []},
+      { id: 3, name: "Kitchen", east:2, objects: [ { "name": "Knife" } ] },
+      { id: 4, name: "Sun Room", west:2, objects: [ { "name": "Potted Plant" } ]}
     ]
     @rooms_collection = ::RoomsCollection.new(@rooms)
   end
 
   def test_attr_reader
-    assert_equal @rooms, @rooms_collection.rooms
+    expected = @rooms.map{|room| ::Room.new(room)}
+    assert_equal expected, @rooms_collection.rooms
   end
 
   def test_find
@@ -29,8 +30,21 @@ class RoomsCollectionTest < Minitest::Test
   end
 
   def test_connected_rooms
-    assert_equal [@rooms[1]], @rooms_collection.connected_rooms(@rooms[2])
-    assert_equal [@rooms[0], @rooms[3], @rooms[2]], @rooms_collection.connected_rooms(@rooms[1])
+    expected = [
+      ::Room.new(@rooms[1])
+    ]
+    assert_equal expected, @rooms_collection.connected_rooms(::Room.new(@rooms[2]))
+    expected = [
+      ::Room.new(@rooms[0]),
+      ::Room.new(@rooms[3]),
+      ::Room.new(@rooms[2])
+    ]
+    assert_equal expected, @rooms_collection.connected_rooms(::Room.new(@rooms[1]))
+  end
+
+  def test_equal_operator
+    assert_equal ::RoomsCollection.new(@rooms), @rooms_collection
+    refute_equal ::RoomsCollection.new(@rooms), ::RoomsCollection.new(@rooms - [@rooms.first])
   end
 
 end

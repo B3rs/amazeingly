@@ -50,5 +50,24 @@ class PathTest < Minitest::Test
     assert_equal false, path.visited_room?(::Room.new({ id: 5, name: "Bedroom", west:4, objects: []}))
   end
 
+  def test_equal_operator
+    expected = ::Path.new [
+      {room: @rooms[1], collected_objects: []},
+      {room: @rooms[0], collected_objects: []},
+      {room: @rooms[1], collected_objects: []},
+      {room: @rooms[3], collected_objects: ['Potted Plant']},
+      {room: @rooms[1], collected_objects: []},
+      {room: @rooms[2], collected_objects: ['Knife']}
+    ]
+    assert_equal expected, ::Path.new(@raw_path)
+    expected = ::Path.new [
+      {room: @rooms[1], collected_objects: []},
+      {room: @rooms[0], collected_objects: []},
+      {room: @rooms[3], collected_objects: ['Potted Plant']},
+      {room: @rooms[1], collected_objects: []},
+      {room: @rooms[2], collected_objects: ['Knife']}
+    ]
+    refute_equal expected, ::Path.new(@raw_path)
+  end
 
 end

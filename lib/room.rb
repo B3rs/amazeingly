@@ -29,4 +29,14 @@ class Room
   def connected_room_ids
     [north, south, east, west].compact
   end
+
+  def ==(room)
+    id      == room.id &&
+    name    == room.name &&
+    north   == room.north &&
+    south   == room.south &&
+    east    == room.east &&
+    west    == room.west &&
+    objects == room.objects
+  end
 end

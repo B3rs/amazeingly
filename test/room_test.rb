@@ -41,10 +41,13 @@ class RoomTest < Minitest::Test
   def test_connected_room_ids
     assert_equal [1, 2], @room.connected_room_ids
   end
-=begin
-  def test_objects_intersection
-    assert_equal ['Potted Plant'], @room.objects_intersection(['Potted Plant', 'Knife'])
-    assert_equal [], @room.has_objects?(['Fork', 'Knife'])
+
+  def test_equal_operator
+    expected = ::Room.new id: 4, name: "Sun Room", west: 2, south: 1, objects: [ {"name": "Fork"}, { "name": "Potted Plant" } ]
+    assert_equal expected, @room
+    expected = ::Room.new id: 4, name: "Sun Room", west: 2, objects: [ {"name": "Fork"}, { "name": "Potted Plant" } ]
+    refute_equal expected, @room
+    expected = ::Room.new id: 3, name: "Sun Room", west: 2, south: 1, objects: [ {"name": "Fork"}, { "name": "Potted Plant" } ]
+    refute_equal expected, @room
   end
-=end
 end
