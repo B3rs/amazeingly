@@ -1,7 +1,6 @@
 module Amazeingly
   class Path
-
-    def initialize(raw_path=[])
+    def initialize(raw_path = [])
       @path = raw_path
     end
 
@@ -15,11 +14,11 @@ module Amazeingly
     end
 
     def visited_rooms
-      path.map{ |step| step[:room] }.uniq
+      path.map { |step| step[:room] }.uniq
     end
 
     def visited_room?(room)
-      path.any? { |step| step[:room] == room  }
+      path.any? { |step| step[:room] == room }
     end
 
     def ==(other_path)
@@ -29,11 +28,9 @@ module Amazeingly
     private
 
     def step(room, objects)
-      {room: room, collected_objects: objects}
+      { room: room, collected_objects: objects }
     end
 
-    def path
-      @path
-    end
+    attr_reader :path
   end
 end

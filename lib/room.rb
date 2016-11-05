@@ -12,7 +12,7 @@ module Amazeingly
     end
 
     def has_object?(object_name)
-      ! objects.find{ |object| object[:name] == object_name }.nil?
+      !objects.find { |object| object[:name] == object_name }.nil?
     end
 
     def has_objects?(object_names)
@@ -20,11 +20,11 @@ module Amazeingly
     end
 
     def matching_objects(names)
-      names.select{ |name| has_object?(name) }
+      names.select { |name| has_object?(name) }
     end
 
     def object_names
-      objects.map{ |object| object[:name] }
+      objects.map { |object| object[:name] }
     end
 
     def connected_room_ids
@@ -32,13 +32,13 @@ module Amazeingly
     end
 
     def ==(room)
-      id      == room.id &&
-      name    == room.name &&
-      north   == room.north &&
-      south   == room.south &&
-      east    == room.east &&
-      west    == room.west &&
-      objects == room.objects
+      id == room.id &&
+        name    == room.name &&
+        north   == room.north &&
+        south   == room.south &&
+        east    == room.east &&
+        west    == room.west &&
+        objects == room.objects
     end
   end
 end

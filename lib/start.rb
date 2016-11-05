@@ -5,4 +5,4 @@ app = Amazeingly::Application.new(
   starting_room_id: ARGV[1].to_i,
   objects: ARGV[2].split(',')
 )
-app.start()
+app.start
