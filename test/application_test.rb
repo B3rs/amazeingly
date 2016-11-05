@@ -2,19 +2,9 @@ gem 'minitest', '~> 5.4'
 require 'minitest/autorun'
 require_relative '../lib/application'
 
-class ApplicationTest < Minitest::Test
+class Amazeingly::ApplicationTest < Minitest::Test
 
   def setup
-    @file_content = <<-FILE_CONTENT
-      {
-        "rooms": [
-          { "id": 1, "name": "Hallway", "north": 2, "objects": [] },
-          { "id": 2, "name": "Dining Room", "south": 1, "west": 3, "east": 4, "objects": []},
-          { "id": 3, "name": "Kitchen","east":2, "objects": [ { "name": "Knife" } ] },
-          { "id": 4, "name": "Sun Room","west":2, "objects": [ { "name": "Potted Plant" } ]}
-        ]
-      }
-    FILE_CONTENT
     @rooms = [
       { "id": 1, "name": "Hallway", "north": 2, "objects": [] },
       { "id": 2, "name": "Dining Room", "south": 1, "west": 3, "east": 4, "objects": []},
@@ -24,17 +14,14 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_attr_accessors
-    # stub file open
-    File.stub :read, @file_content do
-      app = ::Application.new(
-        map_file_path:    '/clearly/fake/path',
-        starting_room_id: 2,
-        objects:          ['Knife', 'Laptop']
-      )
-      assert_equal 2, app.starting_room_id
-      assert_equal ['Knife', 'Laptop'], app.objects
-      assert_equal ::RoomsCollection.new(@rooms), app.rooms_collection
-    end
+    app = Amazeingly::Application.new(
+      map_file_path:    './test/fixtures/map.json',
+      starting_room_id: 2,
+      objects:          ['Knife', 'Laptop']
+    )
+    assert_equal 2, app.starting_room_id
+    assert_equal ['Knife', 'Laptop'], app.objects
+    assert_equal Amazeingly::RoomsCollection.new(@rooms), app.rooms_collection
   end
 
   def test_start
@@ -52,14 +39,12 @@ class ApplicationTest < Minitest::Test
 
     out, err = capture_io do
       # stub file open
-      File.stub :read, @file_content do
-        app = ::Application.new(
-          map_file_path:    '/clearly/fake/path',
-          starting_room_id: 2,
-          objects:          ['Knife', 'Potted Plant']
-        )
-        app.start
-      end
+      app = Amazeingly::Application.new(
+        map_file_path:    './test/fixtures/map.json',
+        starting_room_id: 2,
+        objects:          ['Knife', 'Potted Plant']
+      )
+      app.start
     end
 
     assert_equal expected, out

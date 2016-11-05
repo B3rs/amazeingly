@@ -2,9 +2,9 @@ gem 'minitest', '~> 5.4'
 require 'minitest/autorun'
 require_relative '../lib/room'
 
-class RoomTest < Minitest::Test
+class Amazeingly::RoomTest < Minitest::Test
   def setup
-    @room = ::Room.new({ id: 4, name: "Sun Room", west: 2, south: 1, objects: [ {"name": "Fork"}, { "name": "Potted Plant" } ]})
+    @room = Amazeingly::Room.new({ id: 4, name: "Sun Room", west: 2, south: 1, objects: [ {"name": "Fork"}, { "name": "Potted Plant" } ]})
   end
   def test_attr_reader
     assert_equal 4, @room.id
@@ -43,11 +43,11 @@ class RoomTest < Minitest::Test
   end
 
   def test_equal_operator
-    expected = ::Room.new id: 4, name: "Sun Room", west: 2, south: 1, objects: [ {"name": "Fork"}, { "name": "Potted Plant" } ]
+    expected = Amazeingly::Room.new id: 4, name: "Sun Room", west: 2, south: 1, objects: [ {"name": "Fork"}, { "name": "Potted Plant" } ]
     assert_equal expected, @room
-    expected = ::Room.new id: 4, name: "Sun Room", west: 2, objects: [ {"name": "Fork"}, { "name": "Potted Plant" } ]
+    expected = Amazeingly::Room.new id: 4, name: "Sun Room", west: 2, objects: [ {"name": "Fork"}, { "name": "Potted Plant" } ]
     refute_equal expected, @room
-    expected = ::Room.new id: 3, name: "Sun Room", west: 2, south: 1, objects: [ {"name": "Fork"}, { "name": "Potted Plant" } ]
+    expected = Amazeingly::Room.new id: 3, name: "Sun Room", west: 2, south: 1, objects: [ {"name": "Fork"}, { "name": "Potted Plant" } ]
     refute_equal expected, @room
   end
 end

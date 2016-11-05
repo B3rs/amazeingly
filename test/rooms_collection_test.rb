@@ -2,7 +2,7 @@ gem 'minitest', '~> 5.4'
 require 'minitest/autorun'
 require_relative '../lib/rooms_collection'
 
-class RoomsCollectionTest < Minitest::Test
+class Amazeingly::RoomsCollectionTest < Minitest::Test
   def setup
     @rooms = [
       { id: 1, name: "Hallway", north: 2, objects: [] },
@@ -10,11 +10,11 @@ class RoomsCollectionTest < Minitest::Test
       { id: 3, name: "Kitchen", east:2, objects: [ { "name": "Knife" } ] },
       { id: 4, name: "Sun Room", west:2, objects: [ { "name": "Potted Plant" } ]}
     ]
-    @rooms_collection = ::RoomsCollection.new(@rooms)
+    @rooms_collection = Amazeingly::RoomsCollection.new(@rooms)
   end
 
   def test_attr_reader
-    expected = @rooms.map{|room| ::Room.new(room)}
+    expected = @rooms.map{|room| Amazeingly::Room.new(room)}
     assert_equal expected, @rooms_collection.rooms
   end
 
@@ -26,25 +26,25 @@ class RoomsCollectionTest < Minitest::Test
 
   def test_count
     assert_equal @rooms.count, @rooms_collection.count
-    assert_equal 0, ::RoomsCollection.new.count
+    assert_equal 0, Amazeingly::RoomsCollection.new.count
   end
 
   def test_connected_rooms
     expected = [
-      ::Room.new(@rooms[1])
+      Amazeingly::Room.new(@rooms[1])
     ]
-    assert_equal expected, @rooms_collection.connected_rooms(::Room.new(@rooms[2]))
+    assert_equal expected, @rooms_collection.connected_rooms(Amazeingly::Room.new(@rooms[2]))
     expected = [
-      ::Room.new(@rooms[0]),
-      ::Room.new(@rooms[3]),
-      ::Room.new(@rooms[2])
+      Amazeingly::Room.new(@rooms[0]),
+      Amazeingly::Room.new(@rooms[3]),
+      Amazeingly::Room.new(@rooms[2])
     ]
-    assert_equal expected, @rooms_collection.connected_rooms(::Room.new(@rooms[1]))
+    assert_equal expected, @rooms_collection.connected_rooms(Amazeingly::Room.new(@rooms[1]))
   end
 
   def test_equal_operator
-    assert_equal ::RoomsCollection.new(@rooms), @rooms_collection
-    refute_equal ::RoomsCollection.new(@rooms), ::RoomsCollection.new(@rooms - [@rooms.first])
+    assert_equal Amazeingly::RoomsCollection.new(@rooms), @rooms_collection
+    refute_equal Amazeingly::RoomsCollection.new(@rooms), Amazeingly::RoomsCollection.new(@rooms - [@rooms.first])
   end
 
 end
