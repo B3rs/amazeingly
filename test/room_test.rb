@@ -46,8 +46,6 @@ class Amazeingly::RoomTest < Minitest::Test
   def test_equal_operator
     expected = Amazeingly::Room.new id: 4, name: 'Sun Room', west: 2, south: 1, objects: [{ name: 'Fork' }, { name: 'Potted Plant' }]
     assert_equal expected, @room
-    expected = Amazeingly::Room.new id: 4, name: 'Sun Room', west: 2, objects: [{ name: 'Fork' }, { name: 'Potted Plant' }]
-    refute_equal expected, @room
     expected = Amazeingly::Room.new id: 3, name: 'Sun Room', west: 2, south: 1, objects: [{ name: 'Fork' }, { name: 'Potted Plant' }]
     refute_equal expected, @room
   end

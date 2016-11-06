@@ -29,6 +29,11 @@ class Amazeingly::RoomsCollectionTest < Minitest::Test
     assert_equal 0, Amazeingly::RoomsCollection.new.count
   end
 
+  def test_room_for
+    assert_equal Amazeingly::Room.new(@rooms[2]), @rooms_collection.room_for(object: 'Knife')
+    assert_equal nil, @rooms_collection.room_for(object: 'Laptop')
+  end
+
   def test_connected_rooms
     expected = [
       Amazeingly::Room.new(@rooms[1])

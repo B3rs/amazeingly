@@ -1,16 +1,20 @@
 require 'optparse'
 require './lib/application'
 
-options = {file_path: './resources/map.json', starting_room_id: 1, objects: []}
+options = { file_path: './resources/map.json', starting_room_id: 1, objects: [] }
 
-parser = OptionParser.new do|opts|
-  opts.banner = "Usage: years.rb [options]"
-  opts.on('-n', '--name name', 'Name') do |name|
-    options[:name] = name;
+parser = OptionParser.new do |opts|
+  opts.banner = 'Usage: start.rb [options]'
+  opts.on('-f', '--file file', 'File') do |file_path|
+    options[:file_path] = file_path
   end
 
-  opts.on('-a', '--age age', 'Age') do |age|
-    options[:age] = age;
+  opts.on('-r', '--room-id room-id', 'Room ID') do |rid|
+    options[:starting_room_id] = rid.to_i
+  end
+
+  opts.on('-o', '--objects objects', 'Objects') do |objects|
+    options[:objects] = objects.split(',')
   end
 
   opts.on('-h', '--help', 'Displays Help') do
@@ -22,8 +26,9 @@ end
 parser.parse!
 
 app = Amazeingly::Application.new(
-  map_file_path: ARGV[0],
-  starting_room_id: ARGV[1].to_i,
-  objects: ARGV[2].split(',')
+  map_file_path:    options[:file_path],
+  starting_room_id: options[:starting_room_id],
+  objects:          options[:objects]
 )
+
 app.start

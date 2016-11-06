@@ -4,12 +4,7 @@ require_relative '../lib/application'
 
 class Amazeingly::ApplicationTest < Minitest::Test
   def setup
-    @rooms = [
-      { id: 1, name: 'Hallway', north: 2, objects: [] },
-      { id: 2, name: 'Dining Room', south: 1, west: 3, east: 4, objects: [] },
-      { id: 3, name: 'Kitchen', east: 2, objects: [{ name: 'Knife' }] },
-      { id: 4, name: 'Sun Room', west: 2, objects: [{ name: 'Potted Plant' }] }
-    ]
+    @rooms = JSON.parse(File.read('./test/fixtures/map.json'), symbolize_names: true)[:rooms]
   end
 
   def test_attr_accessors
@@ -28,11 +23,9 @@ class Amazeingly::ApplicationTest < Minitest::Test
       'ID  Room          Object Collected',
       '----------------------------------',
       '2   Dining Room   None',
-      '1   Hallway       None',
+      '3   Kitchen       Knife',
       '2   Dining Room   None',
       '4   Sun Room      Potted Plant',
-      '2   Dining Room   None',
-      '3   Kitchen       Knife',
       ''
     ].join("\n")
 

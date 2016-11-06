@@ -1,8 +1,11 @@
 {
   "rooms": [
-    { "id": 1, "name": "Hallway", "north": 2, "objects": [] },
+    { "id": 1, "name": "Hallway", "north": 2, "south": 5, "objects": [] },
     { "id": 2, "name": "Dining Room", "south": 1, "west": 3, "east": 4, "objects": []},
-    { "id": 3, "name": "Kitchen","east":2, "objects": [ { "name": "Knife" } ] },
-    { "id": 4, "name": "Sun Room","west":2, "objects": [ { "name": "Potted Plant" } ]}
+    { "id": 3, "name": "Kitchen", "east": 2, "objects": [ { "name": "Knife" } ] },
+    { "id": 4, "name": "Sun Room", "west": 2, "south": 7, "objects": [ { "name": "Potted Plant" } ]},
+    { "id": 5, "name": "Bed Room", "north": 1, "south": 6, "east": 7, "objects": []},
+    { "id": 6, "name": "Garden", "north": 5, "objects": []},
+    { "id": 7, "name": "Street", "west": 5, "north": 4, "objects": [ { "name": "Laptop" } ]}
   ]
 }

@@ -18,22 +18,27 @@ class Amazeingly::PathTest < Minitest::Test
       { room: @rooms[1], collected_objects: [] },
       { room: @rooms[2], collected_objects: ['Knife'] }
     ]
+    @steps = @raw_path.map.with_index { |step, i| step.merge(step_number: i + 1) }
     @room = @rooms[2]
     @objects = @room.object_names
   end
 
-  def test_to_a
-    expected = @raw_path
-    assert_equal expected, Amazeingly::Path.new(expected).to_a
-    assert_equal [], Amazeingly::Path.new.to_a
+  def test_steps
+    expected = @steps
+    assert_equal expected, Amazeingly::Path.new(@raw_path).steps
+    assert_equal [], Amazeingly::Path.new.steps
   end
 
   def test_push
-    expected = [
-      { room: @room, collected_objects: @objects }
-    ]
-    path = Amazeingly::Path.new
-    assert_equal expected, path.push(room: @room, collected_objects: @objects)
+    expected = [{ step_number: 1, room: @room, collected_objects: @objects }]
+    assert_equal expected, Amazeingly::Path.new.push(room: @room, collected_objects: @objects)
+    expected = [{ step_number: 1, room: @room, collected_objects: [] }]
+    assert_equal expected, Amazeingly::Path.new.push(room: @room)
+  end
+
+  def test_last_visited_room
+    assert_equal @rooms[2], Amazeingly::Path.new(@raw_path).last_visited_room
+    assert_equal nil, Amazeingly::Path.new.last_visited_room
   end
 
   def test_visited_rooms
@@ -47,6 +52,60 @@ class Amazeingly::PathTest < Minitest::Test
       assert_equal true, path.visited_room?(room)
     end
     assert_equal false, path.visited_room?(Amazeingly::Room.new(id: 5, name: 'Bedroom', west: 4, objects: []))
+  end
+
+  def test_slice_steps
+    path = Amazeingly::Path.new(@raw_path)
+    expected = @steps.slice(1, 3)
+    assert_equal expected, path.slice_steps(from: 1, to: 3)
+    assert_equal path.slice_steps(from: 1, to: 5), path.slice_steps(from: 1, to: 10)
+  end
+
+  def test_merge!
+    expected = Amazeingly::Path.new [
+      { room: @rooms[0], collected_objects: [] },
+      { room: @rooms[1], collected_objects: [] },
+      { room: @rooms[3], collected_objects: ['Potted Plant'] },
+      { room: @rooms[1], collected_objects: [] }
+    ]
+    steps1 = [
+      { room: @rooms[0], collected_objects: [] },
+      { room: @rooms[1], collected_objects: [] },
+      { room: @rooms[3], collected_objects: ['Potted Plant'] }
+    ]
+    steps2 = [
+      { room: @rooms[3], collected_objects: [] },
+      { room: @rooms[1], collected_objects: [] }
+    ]
+    assert_equal expected, Amazeingly::Path.new(steps1).merge!(Amazeingly::Path.new(steps2))
+
+    expected = Amazeingly::Path.new [
+      { room: @rooms[0], collected_objects: [] },
+      { room: @rooms[1], collected_objects: [] },
+      { room: @rooms[3], collected_objects: [] },
+      { room: @rooms[1], collected_objects: [] }
+    ]
+    steps1 = [
+      { room: @rooms[0], collected_objects: [] },
+      { room: @rooms[1], collected_objects: [] }
+    ]
+    steps2 = [
+      { room: @rooms[3], collected_objects: [] },
+      { room: @rooms[1], collected_objects: [] }
+    ]
+    assert_equal expected, Amazeingly::Path.new(steps1).merge!(Amazeingly::Path.new(steps2))
+  end
+
+  def test_collected_objects
+    path = Amazeingly::Path.new [
+      { room: @rooms[1], collected_objects: [] },
+      { room: @rooms[0], collected_objects: [] },
+      { room: @rooms[1], collected_objects: [] },
+      { room: @rooms[3], collected_objects: ['Potted Plant'] },
+      { room: @rooms[1], collected_objects: [] },
+      { room: @rooms[2], collected_objects: ['Knife'] }
+    ]
+    assert_equal ['Potted Plant', 'Knife'], path.collected_objects
   end
 
   def test_equal_operator

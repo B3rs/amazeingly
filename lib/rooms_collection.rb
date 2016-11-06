@@ -10,7 +10,7 @@ module Amazeingly
     end
 
     def find(id)
-      rooms.detect { |room| room.id == id }
+      rooms.find { |room| room.id == id }
     end
 
     def connected_rooms(room)
@@ -19,6 +19,10 @@ module Amazeingly
 
     def count
       rooms.count
+    end
+
+    def room_for(object:)
+      rooms.find { |room| room.objects.include?(name: object) }
     end
 
     def ==(collection)

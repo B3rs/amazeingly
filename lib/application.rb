@@ -14,8 +14,8 @@ module Amazeingly
     end
 
     def start
-      path_finder = Amazeingly::PathFinder.new(rooms_collection: rooms_collection, starting_room_id: starting_room_id, objects: objects)
-      path = path_finder.path_for_objects
+      path_finder = Amazeingly::PathFinder.new(rooms_collection: rooms_collection)
+      path = path_finder.path_for(objects: objects, starting_room_id: starting_room_id)
 
       print_path(path)
     end
@@ -25,7 +25,7 @@ module Amazeingly
     def print_path(path)
       header      = 'ID  Room          Object Collected'
       separator   = '----------------------------------'
-      rows = path.to_a.map do |step|
+      rows = path.steps.map do |step|
         step[:room].id.to_s.ljust(4) +
           step[:room].name.ljust(14) +
           (step[:collected_objects].any? ? step[:collected_objects].join(' ') : 'None')
