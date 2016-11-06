@@ -16,32 +16,62 @@ class Amazeingly::PathFinderTest < Minitest::Test
     assert_equal @rooms_collection, @path_finder.rooms_collection
   end
 
-  # Test shortest path with different contexts
-  def test_shortest_path
-    steps     = @path_finder.shortest_path(from_room: @rooms_collection.find(1), to_room: @rooms_collection.find(3)).steps
-    expected  = [
+  def test_valid_paths
+    paths = @path_finder.valid_paths(from_room: @rooms_collection.find(6), to_room: @rooms_collection.find(4))
+    expected = [
+      Amazeingly::Path.new([
+                             { step_number: 1, room: @rooms_collection.find(6), collected_objects: [] },
+                             { step_number: 2, room: @rooms_collection.find(5), collected_objects: [] },
+                             { step_number: 3, room: @rooms_collection.find(7), collected_objects: [] },
+                             { step_number: 4, room: @rooms_collection.find(4), collected_objects: [] }
+                           ]),
+      Amazeingly::Path.new([
+                             { step_number: 1, room: @rooms_collection.find(6), collected_objects: [] },
+                             { step_number: 2, room: @rooms_collection.find(5), collected_objects: [] },
+                             { step_number: 3, room: @rooms_collection.find(1), collected_objects: [] },
+                             { step_number: 4, room: @rooms_collection.find(2), collected_objects: [] },
+                             { step_number: 5, room: @rooms_collection.find(4), collected_objects: [] }
+                           ])
+    ]
+
+    assert_equal expected, paths
+
+    steps = @path_finder.shortest_path(from_room: @rooms_collection.find(1), to_room: @rooms_collection.find(3))
+    expected = Amazeingly::Path.new [
       { step_number: 1, room: @rooms_collection.find(1), collected_objects: [] },
       { step_number: 2, room: @rooms_collection.find(2), collected_objects: [] },
       { step_number: 3, room: @rooms_collection.find(3), collected_objects: [] }
     ]
     assert_equal expected, steps
 
-    steps     = @path_finder.shortest_path(from_room: @rooms_collection.find(1), to_room: @rooms_collection.find(4)).steps
-    expected  = [
+    steps = @path_finder.shortest_path(from_room: @rooms_collection.find(1), to_room: @rooms_collection.find(4))
+    expected = Amazeingly::Path.new [
       { step_number: 1, room: @rooms_collection.find(1), collected_objects: [] },
       { step_number: 2, room: @rooms_collection.find(2), collected_objects: [] },
       { step_number: 3, room: @rooms_collection.find(4), collected_objects: [] }
     ]
     assert_equal expected, steps
 
-    steps     = @path_finder.shortest_path(from_room: @rooms_collection.find(3), to_room: @rooms_collection.find(5)).steps
-    expected  = [
+    steps = @path_finder.shortest_path(from_room: @rooms_collection.find(3), to_room: @rooms_collection.find(5))
+    expected = Amazeingly::Path.new [
       { step_number: 1, room: @rooms_collection.find(3), collected_objects: [] },
       { step_number: 2, room: @rooms_collection.find(2), collected_objects: [] },
       { step_number: 3, room: @rooms_collection.find(1), collected_objects: [] },
       { step_number: 4, room: @rooms_collection.find(5), collected_objects: [] }
     ]
     assert_equal expected, steps
+  end
+
+  # Test shortest path with different contexts
+  def test_shortest_path
+    expected = Amazeingly::Path.new([
+                                      { step_number: 1, room: @rooms_collection.find(6), collected_objects: [] },
+                                      { step_number: 2, room: @rooms_collection.find(5), collected_objects: [] },
+                                      { step_number: 3, room: @rooms_collection.find(7), collected_objects: [] },
+                                      { step_number: 4, room: @rooms_collection.find(4), collected_objects: [] }
+                                    ])
+
+    assert_equal expected, @path_finder.shortest_path(from_room: @rooms_collection.find(6), to_room: @rooms_collection.find(4))
   end
 
   # from now on i test path_for objects in different contexts

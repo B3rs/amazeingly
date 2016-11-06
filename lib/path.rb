@@ -30,11 +30,8 @@ module Amazeingly
     end
 
     def merge!(other_path)
-      other_steps = other_path.steps
-      other_steps.each do |step|
-        if step[:room] != last_visited_room
-          push(room: step[:room], collected_objects: step[:collected_objects])
-        end
+      other_path.steps.each do |step|
+        push(room: step[:room], collected_objects: step[:collected_objects]) if step[:room] != last_visited_room
       end
       self
     end
