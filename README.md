@@ -22,9 +22,9 @@ docker exec amazeingly bin/amazeingly --file /resources/map.json --room-id 2 --o
 ### Parameters 
 
 The supported parameters are:
-1. `--file -f` the map file path (remember: you mounted it inside /resources so it should be /resources/map.json)
-2. `--room-id -r` the starting room id
-3. `--objects -o` a comma separated string containing objects to search
+- `--file -f` the map file path (remember: you mounted it inside /resources so it should be /resources/map.json)
+- `--room-id -r` the starting room id
+- `--objects -o` a comma separated string containing objects to search
 
 the default values for these parameters are:
 ```
@@ -33,15 +33,15 @@ the default values for these parameters are:
 
 so running:
 ```shell
-bin/amazeingly
+docker exec amazeingly bin/amazeingly
 ```
 is the same as running: 
 ```
-bin/amazeingly --file '/resources/map.json' --room-id 1 --objects ''
+docker exec amazeingly bin/amazeingly --file '/resources/map.json' --room-id 1 --objects ''
 ```
-You can alsosee all the available options running 
+You can also see all the available options running 
 ```
-bin/amazeingly -h
+docker exec amazeingly bin/amazeingly -h
 ```
 
 ### Editing the input json file:
@@ -70,4 +70,4 @@ Where:
 You can find (and use) the default mapping inside the `resources/default_map.json` file.
 
 ### Running tests
-You can run tests with `rake test`
+You can run tests with `docker exec amazeingly rake test`
