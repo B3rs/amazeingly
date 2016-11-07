@@ -1,7 +1,9 @@
-require 'optparse'
-require './lib/application'
+#!/usr/bin/env ruby
 
-options = { file_path: './resources/map.json', starting_room_id: 1, objects: [] }
+require 'optparse'
+require 'amazeingly'
+
+options = { file_path: '/resources/map.json', starting_room_id: 1, objects: [] }
 
 parser = OptionParser.new do |opts|
   opts.banner = 'Usage: start.rb [options]'
@@ -25,7 +27,7 @@ end
 
 parser.parse!
 
-app = Amazeingly::Application.new(
+app = Amazeingly::Amazeingly.new(
   map_file_path:    options[:file_path],
   starting_room_id: options[:starting_room_id],
   objects:          options[:objects]

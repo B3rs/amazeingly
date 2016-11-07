@@ -1,6 +1,6 @@
 require 'minitest/autorun'
-require_relative '../lib/path'
-require_relative '../lib/room'
+require 'amazeingly/room'
+require 'amazeingly/path'
 
 class Amazeingly::PathTest < Minitest::Test
   def setup

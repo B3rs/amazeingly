@@ -1,7 +1,6 @@
 gem 'minitest', '~> 5.4'
 require 'minitest/autorun'
-require_relative '../lib/room'
-
+require 'amazeingly/room'
 class Amazeingly::RoomTest < Minitest::Test
   def setup
     @room = Amazeingly::Room.new(id: 4, name: 'Sun Room', west: 2, south: 1, objects: [{ name: 'Fork' }, { name: 'Potted Plant' }])

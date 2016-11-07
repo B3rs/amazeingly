@@ -1,4 +1,4 @@
-require './lib/path'
+require 'amazeingly/path'
 module Amazeingly
   class PathFinder
     attr_reader :rooms_collection
@@ -16,7 +16,7 @@ module Amazeingly
       # If i find some objects by the road i collect them and remove them from the queue
       # This does not guarantee the shortest path that could solve our problem
       # because it's dependent from objects order but is a simple and straightforward solution
-      Amazeingly::Path.new.tap do |path|
+      Path.new.tap do |path|
         while search_objects.any?
           object  = search_objects.first
           to_room = rooms_collection.room_for(object: object)
@@ -39,7 +39,7 @@ module Amazeingly
       # A depth first search of rooms tree where the root is the from_room parameter
       matching_objects  = from_room.matching_objects(objects)
       search_objects    = objects.clone - matching_objects
-      paths_stack       = [Amazeingly::Path.new([{ room: from_room, collected_objects: matching_objects }])]
+      paths_stack       = [Path.new([{ room: from_room, collected_objects: matching_objects }])]
 
       [].tap do |valid_paths|
         while paths_stack.any?
@@ -55,7 +55,7 @@ module Amazeingly
           next_rooms = rooms_collection.connected_rooms(room) - path.visited_rooms
           next unless next_rooms.any?
           next_rooms.each do |next_room|
-            new_path = Amazeingly::Path.new(path.steps)
+            new_path = Path.new(path.steps)
             matching_objects = next_room.matching_objects(objects)
             search_objects -= matching_objects
             new_path.push(room: next_room, collected_objects: matching_objects)

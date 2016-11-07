@@ -1,9 +1,9 @@
 gem 'minitest', '~> 5.4'
 require 'minitest/autorun'
 require 'json'
-require_relative '../lib/path_finder'
-require_relative '../lib/rooms_collection'
-require_relative '../lib/room'
+require 'amazeingly/path_finder'
+require 'amazeingly/room'
+require 'amazeingly/rooms_collection'
 
 class Amazeingly::PathFinderTest < Minitest::Test
   def setup

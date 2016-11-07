@@ -1,7 +1,6 @@
 gem 'minitest', '~> 5.4'
 require 'minitest/autorun'
-require_relative '../lib/rooms_collection'
-
+require 'amazeingly/rooms_collection'
 class Amazeingly::RoomsCollectionTest < Minitest::Test
   def setup
     @rooms = [

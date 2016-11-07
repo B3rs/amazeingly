@@ -1,6 +1,6 @@
-require './lib/room'
-require './lib/path'
-require './lib/exceptions'
+require 'amazeingly/room'
+require 'amazeingly/path'
+require 'amazeingly/exceptions'
 
 module Amazeingly
   class RoomsCollection
@@ -12,8 +12,8 @@ module Amazeingly
     end
 
     def push(room)
-      raise Amazeingly::RoomsCollectionException, "Duplicate Room with ID: #{room[:id]}" if find(room[:id])
-      rooms << Amazeingly::Room.new(room)
+      raise RoomsCollectionException, "Duplicate Room with ID: #{room[:id]}" if find(room[:id])
+      rooms << Room.new(room)
     end
 
     def find(id)

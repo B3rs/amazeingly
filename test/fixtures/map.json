@@ -5,7 +5,7 @@
     { "id": 3, "name": "Kitchen", "east": 2, "objects": [ { "name": "Knife" } ] },
     { "id": 4, "name": "Sun Room", "west": 2, "south": 7, "objects": [ { "name": "Potted Plant" } ]},
     { "id": 5, "name": "Bed Room", "north": 1, "south": 6, "east": 7, "objects": []},
-    { "id": 6, "name": "Garden", "north": 5, "objects": []},
-    { "id": 7, "name": "Street", "west": 5, "north": 4, "objects": [ { "name": "Laptop" } ]}
+    { "id": 6, "name": "Street", "north": 5, "objects": []},
+    { "id": 7, "name": "Garden", "west": 5, "north": 4, "objects": [ { "name": "Laptop" } ]}
   ]
 }
