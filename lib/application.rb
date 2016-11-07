@@ -13,14 +13,12 @@ module Amazeingly
 
     def start
       rooms_collection = read_file(file_path)
-      raise InputException, 'Invalid starting Room ID' unless rooms_collection.find(starting_room_id)
+      raise Amazeingly::InputException, 'Invalid starting Room ID' unless rooms_collection.find(starting_room_id)
       path = search_path(rooms_collection)
 
       print(path)
-    rescue InputException => e
+    rescue Amazeingly::InputException => e
       puts e.message
-    rescue Errno::ENOENT => e
-      puts 'Cannot read the specified input file'
     end
 
     private
@@ -30,6 +28,10 @@ module Amazeingly
     def read_file(file_path)
       json_file = JSON.parse File.read(file_path), symbolize_names: true
       create_rooms_collection(json_file[:rooms])
+    rescue Errno::ENOENT
+      raise Amazeingly::InputException, 'Cannot read the specified input file'
+    rescue JSON::ParserError
+      raise Amazeingly::InputException, 'The specified file does not contain a valid JSON'
     end
 
     def create_rooms_collection(rooms)

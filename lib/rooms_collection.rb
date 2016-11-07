@@ -12,7 +12,7 @@ module Amazeingly
     end
 
     def push(room)
-      raise RoomsCollectionException, "Duplicate Room with ID: #{room[:id]}" if find(room[:id])
+      raise Amazeingly::RoomsCollectionException, "Duplicate Room with ID: #{room[:id]}" if find(room[:id])
       rooms << Amazeingly::Room.new(room)
     end
 

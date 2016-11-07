@@ -71,4 +71,18 @@ class Amazeingly::ApplicationTest < Minitest::Test
 
     assert_equal expected, out
   end
+
+  def test_start_with_invalid_JSON_file
+    expected = "The specified file does not contain a valid JSON\n"
+    out, err = capture_io do
+      # stub file open
+      Amazeingly::Application.new(
+        map_file_path: './test/fixtures/broken_map.json',
+        starting_room_id: 2,
+        objects: %w(Knife Laptop)
+      ).start
+    end
+
+    assert_equal expected, out
+  end
 end
