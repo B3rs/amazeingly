@@ -14,6 +14,8 @@ module Amazeingly
       # Calculate and merge paths between the starting room and the first object,
       # the first object and the second object, the second object and the third object... (and so on)
       # If i find some objects by the road i collect them and remove them from the queue
+      # This does not guarantee the shortest path that could solve our problem
+      # because it's dependent from objects order but is a simple and straightforward solution
       Amazeingly::Path.new.tap do |path|
         while search_objects.any?
           object  = search_objects.first
@@ -29,7 +31,6 @@ module Amazeingly
     end
 
     def shortest_path(from_room:, to_room:, objects: [])
-      # Search for and return the shortest path
       valid_paths(from_room: from_room, to_room: to_room, objects: objects)
         .sort_by { |path| path.steps.count }.first
     end
@@ -38,12 +39,12 @@ module Amazeingly
       # A depth first search of rooms tree where the root is the from_room parameter
       matching_objects  = from_room.matching_objects(objects)
       search_objects    = objects.clone - matching_objects
-      paths_queue       = [Amazeingly::Path.new([{ room: from_room, collected_objects: matching_objects }])]
+      paths_stack       = [Amazeingly::Path.new([{ room: from_room, collected_objects: matching_objects }])]
 
       [].tap do |valid_paths|
-        while paths_queue.any?
-          # I get the first path in the queue
-          path = paths_queue.shift
+        while paths_stack.any?
+          # I pop the first path in the stack
+          path = paths_stack.pop
           # I check if the last room in this path is the destination room and,
           # eventually, add it to the valid paths
           room = path.last_visited_room
@@ -58,7 +59,7 @@ module Amazeingly
             matching_objects = next_room.matching_objects(objects)
             search_objects -= matching_objects
             new_path.push(room: next_room, collected_objects: matching_objects)
-            paths_queue << new_path
+            paths_stack.push(new_path)
           end
         end
       end
