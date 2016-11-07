@@ -21,14 +21,6 @@ module Amazeingly
       path.map { |step| step[:room] }.uniq
     end
 
-    def visited_room?(room)
-      path.any? { |step| step[:room] == room }
-    end
-
-    def slice_steps(from:, to:)
-      path.slice(from, to)
-    end
-
     def merge!(other_path)
       other_path.steps.each do |step|
         push(room: step[:room], collected_objects: step[:collected_objects]) if step[:room] != last_visited_room

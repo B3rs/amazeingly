@@ -14,7 +14,7 @@ parser = OptionParser.new do |opts|
   end
 
   opts.on('-o', '--objects objects', 'Objects') do |objects|
-    options[:objects] = objects.split(',')
+    options[:objects] = objects.split(',').map(&:strip)
   end
 
   opts.on('-h', '--help', 'Displays Help') do

@@ -22,13 +22,6 @@ class Amazeingly::RoomTest < Minitest::Test
     assert_equal true, @room.has_object?('Potted Plant')
   end
 
-  def test_has_objects?
-    assert_equal true, @room.has_objects?(['Potted Plant'])
-    assert_equal true, @room.has_objects?(['Potted Plant', 'Fork'])
-    assert_equal true, @room.has_objects?(['Fork'])
-    assert_equal false, @room.has_objects?(['Knife'])
-  end
-
   def test_matching_objects
     assert_equal ['Fork'], @room.matching_objects(%w(Fork Knife))
     assert_equal ['Potted Plant', 'Fork'], @room.matching_objects(['Potted Plant', 'Fork'])

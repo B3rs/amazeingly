@@ -15,10 +15,6 @@ module Amazeingly
       !objects.find { |object| object[:name] == object_name }.nil?
     end
 
-    def has_objects?(object_names)
-      object_names.all? { |name| has_object?(name) }
-    end
-
     def matching_objects(names)
       names.select { |name| has_object?(name) }
     end

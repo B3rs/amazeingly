@@ -46,21 +46,6 @@ class Amazeingly::PathTest < Minitest::Test
     assert_equal @rooms.sort_by(&:id), Amazeingly::Path.new(@raw_path).visited_rooms.sort_by(&:id)
   end
 
-  def test_visited_room?
-    path = Amazeingly::Path.new(@raw_path)
-    @rooms.each do |room|
-      assert_equal true, path.visited_room?(room)
-    end
-    assert_equal false, path.visited_room?(Amazeingly::Room.new(id: 5, name: 'Bedroom', west: 4, objects: []))
-  end
-
-  def test_slice_steps
-    path = Amazeingly::Path.new(@raw_path)
-    expected = @steps.slice(1, 3)
-    assert_equal expected, path.slice_steps(from: 1, to: 3)
-    assert_equal path.slice_steps(from: 1, to: 5), path.slice_steps(from: 1, to: 10)
-  end
-
   def test_merge!
     expected = Amazeingly::Path.new [
       { room: @rooms[0], collected_objects: [] },

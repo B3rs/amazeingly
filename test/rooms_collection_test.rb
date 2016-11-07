@@ -18,15 +18,19 @@ class Amazeingly::RoomsCollectionTest < Minitest::Test
     assert_equal expected, @rooms_collection.rooms
   end
 
+  def test_push
+    assert_raises Amazeingly::RoomsCollectionException do
+      @rooms_collection.push(id: 1, name: 'Hallway', north: 2, objects: [])
+    end
+
+    expected = (@rooms + [{ id: 5, name: 'Bed Room', objects: [] }]).map { |room| Amazeingly::Room.new(room) }
+    assert_equal expected, Amazeingly::RoomsCollection.new(@rooms).push(id: 5, name: 'Bed Room', objects: [])
+  end
+
   def test_find
     assert_equal 1, @rooms_collection.find(1).id
     assert_equal 4, @rooms_collection.find(4).id
     assert_equal nil, @rooms_collection.find(5)
-  end
-
-  def test_count
-    assert_equal @rooms.count, @rooms_collection.count
-    assert_equal 0, Amazeingly::RoomsCollection.new.count
   end
 
   def test_room_for

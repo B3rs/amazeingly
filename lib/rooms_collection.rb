@@ -1,12 +1,19 @@
 require './lib/room'
 require './lib/path'
+require './lib/exceptions'
 
 module Amazeingly
   class RoomsCollection
     attr_reader :rooms
 
     def initialize(rooms = [])
-      @rooms = rooms.map { |room| Amazeingly::Room.new(room) }
+      @rooms = []
+      rooms.each { |room| push(room) }
+    end
+
+    def push(room)
+      raise RoomsCollectionException, "Duplicate Room with ID: #{room[:id]}" if find(room[:id])
+      rooms << Amazeingly::Room.new(room)
     end
 
     def find(id)
@@ -15,10 +22,6 @@ module Amazeingly
 
     def connected_rooms(room)
       room.connected_room_ids.map { |id| find(id) }
-    end
-
-    def count
-      rooms.count
     end
 
     def room_for(object:)
