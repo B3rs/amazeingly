@@ -35,9 +35,9 @@ class Amazeingly::ApplicationTest < Minitest::Test
     out, err = capture_io do
       # stub file open
       Amazeingly::Application.new(
-          map_file_path: './test/fixtures/map.json',
-          starting_room_id: 2,
-          objects: %w(Knife Ginseng)
+        map_file_path: './test/fixtures/map.json',
+        starting_room_id: 2,
+        objects: %w(Knife Ginseng)
       ).start
     end
 
@@ -49,9 +49,9 @@ class Amazeingly::ApplicationTest < Minitest::Test
     out, err = capture_io do
       # stub file open
       Amazeingly::Application.new(
-          map_file_path: './invalid_file',
-          starting_room_id: 2,
-          objects: %w(Knife Ginseng)
+        map_file_path: './invalid_file',
+        starting_room_id: 2,
+        objects: %w(Knife Ginseng)
       ).start
     end
 
@@ -63,9 +63,9 @@ class Amazeingly::ApplicationTest < Minitest::Test
     out, err = capture_io do
       # stub file open
       Amazeingly::Application.new(
-          map_file_path: './test/fixtures/map.json',
-          starting_room_id: 20,
-          objects: %w(Knife Laptop)
+        map_file_path: './test/fixtures/map.json',
+        starting_room_id: 20,
+        objects: %w(Knife Laptop)
       ).start
     end
 

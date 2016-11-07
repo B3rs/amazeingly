@@ -13,7 +13,7 @@ module Amazeingly
 
     def start
       rooms_collection = read_file(file_path)
-      raise InputException.new('Invalid starting Room ID') if !rooms_collection.find(starting_room_id)
+      raise InputException, 'Invalid starting Room ID' unless rooms_collection.find(starting_room_id)
       path = search_path(rooms_collection)
 
       print(path)
