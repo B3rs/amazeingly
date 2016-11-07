@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
 
   s.executables << 'amazeingly'
 
-  s.homepage    = 'https://github.com/B3rs/amazeingly'
+  s.homepage = 'https://github.com/B3rs/amazeingly'
 
   s.license = 'MIT'
 
