@@ -85,4 +85,18 @@ class Amazeingly::AmazeinglyTest < Minitest::Test
 
     assert_equal expected, out
   end
+
+  def test_start_with_no_objects
+    expected = "You must provide objects to search\n"
+    out, _ = capture_io do
+      # stub file open
+      Amazeingly::Amazeingly.new(
+          map_file_path: './test/fixtures/broken_map.json',
+          starting_room_id: 2,
+          objects: %w()
+      ).start
+    end
+
+    assert_equal expected, out
+  end
 end
