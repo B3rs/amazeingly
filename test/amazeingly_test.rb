@@ -18,7 +18,7 @@ class Amazeingly::AmazeinglyTest < Minitest::Test
       ''
     ].join("\n")
 
-    out, _ = capture_io do
+    out, = capture_io do
       # stub file open
       Amazeingly::Amazeingly.new(
         map_file_path: './test/fixtures/map.json',
@@ -32,7 +32,7 @@ class Amazeingly::AmazeinglyTest < Minitest::Test
 
   def test_start_with_invalid_objects
     expected = "It's impossible to find a valid path for these objects\n"
-    out, _ = capture_io do
+    out, = capture_io do
       # stub file open
       Amazeingly::Amazeingly.new(
         map_file_path: './test/fixtures/map.json',
@@ -46,7 +46,7 @@ class Amazeingly::AmazeinglyTest < Minitest::Test
 
   def test_start_with_invalid_file
     expected = "Cannot read the specified input file\n"
-    out, _ = capture_io do
+    out, = capture_io do
       # stub file open
       Amazeingly::Amazeingly.new(
         map_file_path: './invalid_file',
@@ -60,7 +60,7 @@ class Amazeingly::AmazeinglyTest < Minitest::Test
 
   def test_start_with_invalid_room_id
     expected = "Invalid starting Room ID\n"
-    out, _ = capture_io do
+    out, = capture_io do
       # stub file open
       Amazeingly::Amazeingly.new(
         map_file_path: './test/fixtures/map.json',
@@ -74,7 +74,7 @@ class Amazeingly::AmazeinglyTest < Minitest::Test
 
   def test_start_with_invalid_JSON_file
     expected = "The specified file does not contain a valid JSON\n"
-    out, _ = capture_io do
+    out, = capture_io do
       # stub file open
       Amazeingly::Amazeingly.new(
         map_file_path: './test/fixtures/broken_map.json',
@@ -88,12 +88,12 @@ class Amazeingly::AmazeinglyTest < Minitest::Test
 
   def test_start_with_no_objects
     expected = "You must provide objects to search\n"
-    out, _ = capture_io do
+    out, = capture_io do
       # stub file open
       Amazeingly::Amazeingly.new(
-          map_file_path: './test/fixtures/broken_map.json',
-          starting_room_id: 2,
-          objects: %w()
+        map_file_path: './test/fixtures/broken_map.json',
+        starting_room_id: 2,
+        objects: %w()
       ).start
     end
 

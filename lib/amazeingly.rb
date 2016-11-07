@@ -11,7 +11,7 @@ class Amazeingly::Amazeingly
   end
 
   def start
-    raise  Amazeingly::InputException, 'You must provide objects to search' if objects.empty?
+    raise Amazeingly::InputException, 'You must provide objects to search' if objects.empty?
     rooms_collection = read_file(file_path)
     raise Amazeingly::InputException, 'Invalid starting Room ID' unless rooms_collection.find(starting_room_id)
     path = search_path(rooms_collection)
